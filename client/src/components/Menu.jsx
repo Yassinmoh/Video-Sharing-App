@@ -17,7 +17,7 @@ import FlagIcon from '@mui/icons-material/Flag';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
+import { Link } from 'react-router-dom'
 
 
 
@@ -25,9 +25,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Container = styled.div`
     flex: 1;
-    background-color:${({theme})=>theme.bg};
+    background-color:${({ theme }) => theme.bg};
     height: 100vh;
-    color: ${({theme})=>theme.text};
+    color: ${({ theme }) => theme.text};
     font-style: 14px;
     position: sticky;
     top: 0;
@@ -54,7 +54,7 @@ const Img = styled.img`
 `
 const Hr = styled.hr`
     margin: 0.938rem 0;
-    border:  0.5px solid ${({theme})=>theme.soft};
+    border:  0.5px solid ${({ theme }) => theme.soft};
 `
 const Login = styled.div`
 
@@ -77,86 +77,88 @@ const Button = styled.button`
     align-items: center;
     gap: 5px;
 `
-const Menu = ({darkMood,setDarkMood}) => {
+const Menu = ({ darkMood, setDarkMood }) => {
     return (
         <Container>
             <Wrapper>
-                <Logo>
-                    <Img src={yassinLogo}/>
-                    YassinTube
-                </Logo>
+                <Link to="/" style={{ textDecoration: 'none',color:"inherit"}}>
+                    <Logo>
+                        <Img src={yassinLogo} />
+                        YassinTube
+                    </Logo>
+                </Link>
                 <Item>
-                    <HomeIcon/>
+                    <HomeIcon />
                     Home
                 </Item>
                 <Item>
-                    <ExploreIcon/>
+                    <ExploreIcon />
                     Explore
                 </Item>
-                <Hr/>
+                <Hr />
                 <Item>
-                    <SubscriptionsIcon/>
+                    <SubscriptionsIcon />
                     Subscription
                 </Item>
                 <Item>
-                    <VideoLibraryIcon/>
+                    <VideoLibraryIcon />
                     Liprary
                 </Item>
                 <Item>
-                    <HistoryIcon/>
+                    <HistoryIcon />
                     History
                 </Item>
-                <Hr/>
+                <Hr />
                 <Login>
                     Sign in to Like videos,Comment,and Subscripe
                     <Button>
-                        <AccountCircleIcon/>
+                        <AccountCircleIcon />
                         SIGN IN
                     </Button>
                 </Login>
-                <Hr/>
+                <Hr />
                 <Title>
                     BEST OF YASSINTUBE
                 </Title>
                 <Item>
-                    <LibraryMusicIcon/>
+                    <LibraryMusicIcon />
                     Music
                 </Item>
                 <Item>
-                    <SportsBasketballIcon/>
+                    <SportsBasketballIcon />
                     Sports
                 </Item>
                 <Item>
-                    <SportsEsportsIcon/>
+                    <SportsEsportsIcon />
                     Gaming
                 </Item>
                 <Item>
-                    <MovieIcon/>
+                    <MovieIcon />
                     Movies
                 </Item>
                 <Item>
-                    <ArticleIcon/>
+                    <ArticleIcon />
                     News
                 </Item>
                 <Item>
-                    <LiveTvIcon/>
+                    <LiveTvIcon />
                     Live
                 </Item>
-                <Hr/>
+                <Hr />
                 <Item>
-                    <SettingsIcon/>
+                    <SettingsIcon />
                     Settings
                 </Item>
                 <Item>
-                    <FlagIcon/>
+                    <FlagIcon />
                     Report
                 </Item>
                 <Item>
-                    <HelpOutlineIcon/>
+                    <HelpOutlineIcon />
                     Help
                 </Item>
-                <Item onClick={()=>setDarkMood(!darkMood)}>
-                    <SettingsBrightnessIcon/>
+                <Item onClick={() => setDarkMood(!darkMood)}>
+                    <SettingsBrightnessIcon />
                     Light Mode
                 </Item>
             </Wrapper>
