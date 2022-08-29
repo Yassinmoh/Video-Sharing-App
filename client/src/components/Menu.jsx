@@ -25,9 +25,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Container = styled.div`
     flex: 1;
-    background-color:#202020;
+    background-color:${({theme})=>theme.bg};
     height: 100vh;
-    color: white;
+    color: ${({theme})=>theme.text};
     font-style: 14px;
     position: sticky;
     top: 0;
@@ -54,10 +54,16 @@ const Img = styled.img`
 `
 const Hr = styled.hr`
     margin: 0.938rem 0;
-    border:  0.5px solid #373737;
+    border:  0.5px solid ${({theme})=>theme.soft};
 `
 const Login = styled.div`
 
+`
+const Title = styled.h2`
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    color:#aaaaaa;
 `
 const Button = styled.button`
     padding: 5px 15px;
@@ -71,7 +77,7 @@ const Button = styled.button`
     align-items: center;
     gap: 5px;
 `
-const Menu = () => {
+const Menu = ({darkMood,setDarkMood}) => {
     return (
         <Container>
             <Wrapper>
@@ -109,6 +115,9 @@ const Menu = () => {
                     </Button>
                 </Login>
                 <Hr/>
+                <Title>
+                    BEST OF YASSINTUBE
+                </Title>
                 <Item>
                     <LibraryMusicIcon/>
                     Music
@@ -146,7 +155,7 @@ const Menu = () => {
                     <HelpOutlineIcon/>
                     Help
                 </Item>
-                <Item>
+                <Item onClick={()=>setDarkMood(!darkMood)}>
                     <SettingsBrightnessIcon/>
                     Light Mode
                 </Item>
