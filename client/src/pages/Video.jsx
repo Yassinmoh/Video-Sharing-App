@@ -4,7 +4,8 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import ReplayOutlinedIcon from '@mui/icons-material/ReplayOutlined';
 import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
-
+import Comments from '../components/Comments'
+import Card from '../components/Card'
 
 
 
@@ -132,8 +133,22 @@ const Video = () => {
                     </ChanelInfo>
                     <Subscripe>Subscripe</Subscripe>
                 </Chanel>
+                <Hr/>
+                <Comments />
             </Content>
-            <Recommendation>Recommendation</Recommendation>
+            <Recommendation>
+                <Card type="sm"/>
+                <Card type="sm"/>
+                <Card type="sm"/>
+                <Card type="sm"/>
+                <Card type="sm"/>
+                <Card type="sm"/>
+                <Card type="sm"/>
+                <Card type="sm"/>
+                <Card type="sm"/>
+                <Card type="sm"/>
+                <Card type="sm"/>
+            </Recommendation>
         </Container>
     )
 }

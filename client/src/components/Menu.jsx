@@ -41,6 +41,10 @@ const Item = styled.div`
     gap: 1.25rem;
     padding: 0.469rem 0;
     cursor: pointer;
+
+    &:hover {
+        background-color: ${({ theme }) => theme.soft};
+    }
 `
 const Logo = styled.div`
     display:flex;
