@@ -85,7 +85,7 @@ const Menu = ({ darkMood, setDarkMood }) => {
     return (
         <Container>
             <Wrapper>
-                <Link to="/" style={{ textDecoration: 'none',color:"inherit"}}>
+                <Link to="/" style={{ textDecoration: 'none', color: "inherit" }}>
                     <Logo>
                         <Img src={yassinLogo} />
                         YassinTube
@@ -115,10 +115,12 @@ const Menu = ({ darkMood, setDarkMood }) => {
                 <Hr />
                 <Login>
                     Sign in to Like videos,Comment,and Subscripe
-                    <Button>
-                        <AccountCircleIcon />
-                        SIGN IN
-                    </Button>
+                    <Link to="/signin" style={{textDecoration: 'none'}}>
+                        <Button>
+                            <AccountCircleIcon />
+                            SIGN IN
+                        </Button>
+                    </Link>
                 </Login>
                 <Hr />
                 <Title>
@@ -163,7 +165,7 @@ const Menu = ({ darkMood, setDarkMood }) => {
                 </Item>
                 <Item onClick={() => setDarkMood(!darkMood)}>
                     <SettingsBrightnessIcon />
-                    {darkMood ? "Light":"Dark"} Mode
+                    {darkMood ? "Light" : "Dark"} Mode
                 </Item>
             </Wrapper>
         </Container>
