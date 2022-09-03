@@ -27,7 +27,7 @@ export const signin = async (req, res, next) => {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRIT_KEY)
         //hide password from response
         const { password, ...other } = user._doc
-        res.cookie("access-token", token).status(200).json(other)
+        res.cookie("access_token", token).status(200).json(other)
     } catch (err) {
         next(err)
     }
