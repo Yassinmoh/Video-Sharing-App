@@ -91,19 +91,25 @@ const Menu = ({ darkMood, setDarkMood }) => {
                         YassinTube
                     </Logo>
                 </Link>
-                <Item>
-                    <HomeIcon />
-                    Home
-                </Item>
-                <Item>
-                    <ExploreIcon />
-                    Explore
-                </Item>
+                <Link to="/" style={{ textDecoration: 'none', color: "inherit" }}>
+                    <Item>
+                        <HomeIcon />
+                        Home
+                    </Item>
+                </Link>
+                <Link to="trends" style={{ textDecoration: 'none', color: "inherit" }}>
+                    <Item>
+                        <ExploreIcon />
+                        Explore
+                    </Item>
+                </Link>
                 <Hr />
-                <Item>
-                    <SubscriptionsIcon />
-                    Subscription
-                </Item>
+                <Link to="subscriptions" style={{ textDecoration: 'none', color: "inherit" }}>
+                    <Item>
+                        <SubscriptionsIcon />
+                        Subscription
+                    </Item>
+                </Link>
                 <Item>
                     <VideoLibraryIcon />
                     Liprary
@@ -115,7 +121,7 @@ const Menu = ({ darkMood, setDarkMood }) => {
                 <Hr />
                 <Login>
                     Sign in to Like videos,Comment,and Subscripe
-                    <Link to="/signin" style={{textDecoration: 'none'}}>
+                    <Link to="/signin" style={{ textDecoration: 'none' }}>
                         <Button>
                             <AccountCircleIcon />
                             SIGN IN

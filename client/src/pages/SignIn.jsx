@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import styled from 'styled-components'
 
 
@@ -59,6 +59,11 @@ const Link=styled.span`
 
 
 const SignIn = () => {
+
+    const [name,setName]=useState('')
+    const [password,setPassword]=useState('')
+    const [email,setEmail]=useState('')
+
     return (
         <Container>
             <Wrapper>
