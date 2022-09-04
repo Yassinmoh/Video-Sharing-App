@@ -1,5 +1,6 @@
 import { createError } from '../error.js'
 import User from '../model/User.js'
+import Video from '../model/Video.js'
 
 export const updateUser = async (req, res, next) => {
     if (req.params.id === req.user.id) {
@@ -70,5 +71,33 @@ export const unSubscribe =async (req, res, next) => {
     }
 }
 
-export const like = (req, res, next) => { }
-export const disLike = (req, res, next) => { }
+export const like =async (req, res, next) => {
+    const id = req.user.id
+    const videoId = req.params.videoId
+    try {
+        await Video.findByIdAndUpdate(videoId,{
+            //"$addToSet" ==> So that the same user is not repeatedly added Unlike "$push"
+            $addToSet:{likes:id},
+            $pull:{dislikes:id}
+        })
+        res.status(200).json('the video has been liked successfully')
+    } catch (err) {
+        next(err)
+    }
+}
+
+export const disLike =async (req, res, next) => {
+    const id = req.user.id
+    const videoId = req.params.videoId
+    try {
+        await Video.findByIdAndUpdate(videoId,{
+            //"$addToSet" ==> So that the same user is not repeatedly added Unlike "$push"
+            $addToSet:{dislikes:id},
+            $pull:{likes:id}
+        })
+        res.status(200).json('the video has been dislike successfully')
+    } catch (err) {
+        next(err)
+    }
+}
+

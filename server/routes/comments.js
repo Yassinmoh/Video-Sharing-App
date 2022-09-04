@@ -5,7 +5,6 @@ const routes=express.Router();
 
 
 
-
 routes.post('/',verifyToken,addComment);
 routes.delete('/:id',verifyToken,delateComment);
 routes.get('/:videoId',getComments);
