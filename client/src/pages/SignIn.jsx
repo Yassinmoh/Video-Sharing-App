@@ -1,3 +1,5 @@
+import { handleBreakpoints } from '@mui/system'
+import axios from 'axios'
 import React,{useState} from 'react'
 import styled from 'styled-components'
 
@@ -33,6 +35,7 @@ const Input=styled.input`
     padding: 10px;
     background-color: transparent;
     width: 100%;
+    color: ${({ theme })=>theme.text};
 `
 const Button=styled.button`
     border-radius: 3px;
@@ -64,18 +67,23 @@ const SignIn = () => {
     const [password,setPassword]=useState('')
     const [email,setEmail]=useState('')
 
+    const handleLogin=async(e)=>{
+        e.preventDefault();
+        const res = await axios.post('/auth/signin',{password,name})
+        console.log(res);
+    }
     return (
         <Container>
             <Wrapper>
                 <Title>Sign In</Title>
                 <SubTitle>to continue to Yassin Tube </SubTitle>
-                <Input placeholder='username'/>
-                <Input type="password" placeholder='password'/>
-                <Button>Sign In</Button>
+                <Input placeholder='username' onChange={(e)=>setName(e.target.value)}/>
+                <Input type="password" placeholder='password' onChange={(e)=>setPassword(e.target.value)}/>
+                <Button onClick={handleLogin}>Sign In</Button>
                 <Title>Or</Title>
-                <Input placeholder='username'/>
-                <Input placeholder='email'/>
-                <Input type="password" placeholder='password'/>
+                <Input placeholder='username'onChange={(e)=>setName(e.target.value)}/>
+                <Input placeholder='email'onChange={(e)=>setEmail(e.target.value)}/>
+                <Input type="password" placeholder='password' onChange={(e)=>setPassword(e.target.value)}/>
                 <Button>Sign Up</Button>
             </Wrapper>
             <More>
