@@ -18,6 +18,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 
 
@@ -82,6 +83,7 @@ const Button = styled.button`
     gap: 5px;
 `
 const Menu = ({ darkMood, setDarkMood }) => {
+    const {currentUser} =useSelector(state=> state.user)
     return (
         <Container>
             <Wrapper>
@@ -118,8 +120,8 @@ const Menu = ({ darkMood, setDarkMood }) => {
                     <HistoryIcon />
                     History
                 </Item>
+                {!currentUser && <Login>
                 <Hr />
-                <Login>
                     Sign in to Like videos,Comment,and Subscripe
                     <Link to="/signin" style={{ textDecoration: 'none' }}>
                         <Button>
@@ -127,7 +129,7 @@ const Menu = ({ darkMood, setDarkMood }) => {
                             SIGN IN
                         </Button>
                     </Link>
-                </Login>
+                </Login>}
                 <Hr />
                 <Title>
                     BEST OF YASSINTUBE
