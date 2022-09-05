@@ -15,4 +15,4 @@ export const videoSlice = createSlice({
 })
 
 export const { loginStart, loginSuccess, loginFailure, logout } = videoSlice.actions
-export default userSlice.reducer
+export default videoSlice.reducer
