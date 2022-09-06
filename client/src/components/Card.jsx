@@ -63,9 +63,9 @@ const Card = ({type,video}) => {
             setChannels(res.data)
         }
         fetchChannels()
-    },[type])
+    },[video.userId])
     return (
-        <Link to="/video/test" style={{textDecoration: 'none'}}>
+        <Link to={`/video/${video._id}`} style={{textDecoration: 'none'}}>
         <Container type={type}>
             <Image type={type} src={video.imgUrl}/>
             <Details type={type}>

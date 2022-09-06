@@ -1,88 +1,94 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import ReplayOutlinedIcon from '@mui/icons-material/ReplayOutlined';
 import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
 import Comments from '../components/Comments'
 import Card from '../components/Card'
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import axios from 'axios';
+import { fetchSuccess } from '../redux/videoSlice'
+import { format } from 'timeago.js';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 
 
 
-const Container =styled.div`
+const Container = styled.div`
     display: flex;
     gap: 1.5rem;
 `
-const Content =styled.div`
+const Content = styled.div`
 flex: 5;
 `
-const Recommendation =styled.div`
+const Recommendation = styled.div`
 flex: 2;
 `
-const VideoWrapper =styled.div`
+const VideoWrapper = styled.div`
 
 `
-const Details =styled.div`
+const Details = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
 `
-const Info =styled.span`
-    color: ${({ theme })=> theme.textSoft};
+const Info = styled.span`
+    color: ${({ theme }) => theme.textSoft};
 `
-const Hr =styled.hr`
-    border: 0.5px solid ${({ theme })=> theme.soft};
+const Hr = styled.hr`
+    border: 0.5px solid ${({ theme }) => theme.soft};
 `
-const Title =styled.h1`
+const Title = styled.h1`
     font-size: 18px;
     font-weight: 400;
     margin-top: 20px;
     margin-bottom: 10px;
-    color: ${({ theme })=> theme.text};
+    color: ${({ theme }) => theme.text};
 `
-const Buttons =styled.div`
+const Buttons = styled.div`
     display:flex;
     gap: 20px;
-    color: ${({ theme })=> theme.text};
+    color: ${({ theme }) => theme.text};
 `
-const Button =styled.div`
+const Button = styled.div`
     display: flex;
     align-items: center;
     gap:5px;
     cursor: pointer;
 `
-const Chanel =styled.div`
+const Chanel = styled.div`
     display:flex;
     justify-content:space-between;
 `
-const ChanelInfo =styled.div`
+const ChanelInfo = styled.div`
     display:flex;
     gap: 20px;
 `
-const Image =styled.img`
+const Image = styled.img`
     width: 50px;
     height:50px;
     border-radius: 50%;
 `
-const ChanelDetails =styled.div`
+const ChanelDetails = styled.div`
     display:flex;
     flex-direction:column;
-    color: ${({ theme })=> theme.text};
+    color: ${({ theme }) => theme.text};
 `
-const ChanelName =styled.span`
+const ChanelName = styled.span`
     font-weight: 500;`
 
-const ChanelCounter =styled.span`
+const ChanelCounter = styled.span`
     margin-top: 5px;
     margin-bottom:20px;
-    color: ${({ theme })=> theme.textSoft};
+    color: ${({ theme }) => theme.textSoft};
     font-size:12px  ;
 `
-const Description =styled.p`
+const Description = styled.p`
     font-size:12px              ;
 `
-const Subscripe =styled.button`
+const Subscripe = styled.button`
     background-color: red;
     font-weight: 500;
     color: white;
@@ -97,46 +103,74 @@ const Subscripe =styled.button`
 
 
 const Video = () => {
+
+    const { currentVideo } = useSelector((state) => state.video);
+    const { currentUser } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+
+
+
+    const path = useLocation().pathname.split("/")[2];
+
+    const [channel, setChannel] = useState({});
+    // const [video, setVideo] = useState({});
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const videoRes = await axios.get(`/videos/find/${path}`);
+            const channelRes = await axios.get(`/users/find/${videoRes.data.userId}`);
+            setChannel(channelRes.data);
+            dispatch(fetchSuccess(videoRes.data))
+        };
+        fetchData();
+
+    }, [path, dispatch]);
+
     return (
         <Container>
             <Content>
                 <VideoWrapper>
-                <iframe width="100%" height="720" src="https://www.youtube.com/embed/vkc99WHcDTk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="100%" height="720" src="https://www.youtube.com/embed/vkc99WHcDTk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </VideoWrapper>
-                <Title>Test Video</Title>
+                <Title>{currentVideo.title}</Title>
                 <Details>
-                    <Info>34,958 veiws 30/0/2022 </Info>
+                    <Info>{currentVideo.views} views {format(currentVideo.createdAt)} </Info>
                     <Buttons>
                         <Button>
-                            <ThumbUpAltOutlinedIcon/> 123
+                            {currentVideo.likes?.includes(currentUser?._id) ? (
+                                <ThumbUpIcon />
+                            ) : (
+                                <ThumbUpOutlinedIcon />
+                            )}{" "}
+                            {currentVideo.likes?.length}
                         </Button>
                         <Button>
-                            <ThumbDownAltOutlinedIcon/> Dislike
+                            <ThumbDownAltOutlinedIcon /> Dislike
                         </Button>
                         <Button>
-                            <ReplayOutlinedIcon/> Share
+                            <ReplayOutlinedIcon /> Share
                         </Button>
                         <Button>
-                            <AddTaskOutlinedIcon/> Save
+                            <AddTaskOutlinedIcon /> Save
                         </Button>
                     </Buttons>
                 </Details>
-                <Hr/>
+                <Hr />
                 <Chanel>
                     <ChanelInfo>
-                        <Image src='https://yt3.ggpht.com/ILAtcb8-5LhkMw50Wa4i4dLzKHhSEpMKnFKQ-BREVayexxKEvGVxUeK-9sOqRqao9LeoREK2=s68-c-k-c0x00ffffff-no-rj'/>
+                        <Image src={channel.img} />
                         <ChanelDetails>
-                            <ChanelName>Yassin Tube</ChanelName>
-                            <ChanelCounter>205k subscriper</ChanelCounter>
-                            <Description>Learn React, Typescript, GraphQL with our tutorials </Description>
+                            <ChanelName>{channel.name}</ChanelName>
+                            <ChanelCounter>{channel.subscribers} subscriper</ChanelCounter>
+                            <Description>{currentVideo.description}</Description>
                         </ChanelDetails>
                     </ChanelInfo>
                     <Subscripe>Subscripe</Subscripe>
                 </Chanel>
-                <Hr/>
+                <Hr />
                 <Comments />
             </Content>
-            <Recommendation>
+            {/* <Recommendation>
                 <Card type="sm"/>
                 <Card type="sm"/>
                 <Card type="sm"/>
@@ -148,7 +182,7 @@ const Video = () => {
                 <Card type="sm"/>
                 <Card type="sm"/>
                 <Card type="sm"/>
-            </Recommendation>
+            </Recommendation> */}
         </Container>
     )
 }
