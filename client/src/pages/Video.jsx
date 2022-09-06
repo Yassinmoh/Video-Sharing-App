@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
+import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
 import ReplayOutlinedIcon from '@mui/icons-material/ReplayOutlined';
 import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
 import Comments from '../components/Comments'
@@ -9,10 +9,10 @@ import Card from '../components/Card'
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
-import { fetchSuccess } from '../redux/videoSlice'
+import { fetchSuccess ,like,dislike} from '../redux/videoSlice'
 import { format } from 'timeago.js';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 
 
 
@@ -118,13 +118,23 @@ const Video = () => {
     useEffect(() => {
         const fetchData = async () => {
             const videoRes = await axios.get(`/videos/find/${path}`);
+            console.log("videoRes",videoRes.data);
             const channelRes = await axios.get(`/users/find/${videoRes.data.userId}`);
             setChannel(channelRes.data);
             dispatch(fetchSuccess(videoRes.data))
         };
         fetchData();
-
     }, [path, dispatch]);
+
+    const handleLike =async ()=>{
+        await axios.put(`/users/like/${currentVideo._id}`);
+        dispatch(like(currentUser._id));
+    }
+    
+    const handleDisike =async ()=>{
+        await axios.put(`/users/dislike/${currentVideo._id}`);
+        dispatch(dislike(currentUser._id));
+    }
 
     return (
         <Container>
@@ -132,20 +142,25 @@ const Video = () => {
                 <VideoWrapper>
                     <iframe width="100%" height="720" src="https://www.youtube.com/embed/vkc99WHcDTk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </VideoWrapper>
-                <Title>{currentVideo.title}</Title>
+                <Title>{currentVideo?.title}</Title>
                 <Details>
-                    <Info>{currentVideo.views} views {format(currentVideo.createdAt)} </Info>
+                    <Info>{currentVideo?.views} views {format(currentVideo?.createdAt)} </Info>
                     <Buttons>
-                        <Button>
-                            {currentVideo.likes?.includes(currentUser?._id) ? (
+                        <Button onClick={handleLike}>
+                            {currentVideo?.likes?.includes(currentUser?._id) ? (
                                 <ThumbUpIcon />
                             ) : (
                                 <ThumbUpOutlinedIcon />
                             )}{" "}
-                            {currentVideo.likes?.length}
+                            {currentVideo?.likes?.length}
                         </Button>
-                        <Button>
-                            <ThumbDownAltOutlinedIcon /> Dislike
+                        <Button onClick={handleDisike}>
+                            {currentVideo?.dislikes?.includes(currentUser?._id) ? (
+                                <ThumbDownIcon />
+                            ) : (
+                                <ThumbDownOffAltOutlinedIcon />
+                            )}{" "}
+                            Dislike
                         </Button>
                         <Button>
                             <ReplayOutlinedIcon /> Share
@@ -162,7 +177,7 @@ const Video = () => {
                         <ChanelDetails>
                             <ChanelName>{channel.name}</ChanelName>
                             <ChanelCounter>{channel.subscribers} subscriper</ChanelCounter>
-                            <Description>{currentVideo.description}</Description>
+                            <Description>{currentVideo?.description}</Description>
                         </ChanelDetails>
                     </ChanelInfo>
                     <Subscripe>Subscripe</Subscripe>
