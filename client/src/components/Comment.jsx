@@ -1,5 +1,9 @@
-import React from 'react'
+import React, { useState ,useEffect} from 'react'
 import styled from 'styled-components'
+import axios from "axios";
+import { format } from 'timeago.js';
+
+
 
 
 const Container = styled.div`
@@ -23,29 +27,40 @@ const Details = styled.div`
 const Name = styled.span`
     font-size: 13px;
     font-weight: 500;
-    color:${({theme})=> theme.text};
+    color:${({ theme }) => theme.text};
 
 `
 const Date = styled.span`
     font-size: 12px;
     font-weight: 400;
     margin-left: 5px;
-    color:${({theme})=> theme.textSoft};
+    color:${({ theme }) => theme.textSoft};
 `
 const Text = styled.span`
     font-size: 14px;
-    color:${({theme})=> theme.text};
+    color:${({ theme }) => theme.text};
 `
 
 
-const Comment = () => {
+const Comment = ({ comment }) => {
+
+    const [channel, setChannel] = useState({});
+
+    useEffect(() => {
+        const fetchComment = async () => {
+            const res = await axios.get(`/users/find/${comment.userId}`);
+            setChannel(res.data)
+        };
+        fetchComment();
+    }, [comment.userId]);
+
+
     return (
         <Container>
-            <Avatar src='https://yt3.ggpht.com/ytc/AMLnZu9DoIpSzW2gtiTVQJAH5xUUbZrn8fTNsfysLoMy=s68-c-k-c0x00ffffff-no-rj' />
+            <Avatar src={channel.img} />
             <Details>
-                <Name>yassin mohamed<Date>1 day ago</Date></Name>
-                <Text>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis velit, nobis vel doloremque aspernatur saepe, praesentium eum ullam         voluptatum, nisi vitae corporis provident eaque quam natus exercitationem ipsa voluptates id?
-                </Text>
+                <Name>{channel.name}<Date>{format(channel.createdAt)}</Date></Name>
+                <Text>{comment.description}</Text>
             </Details>
         </Container>
     )

@@ -101,6 +101,12 @@ const Subscripe = styled.button`
 
 `
 
+const VideoFram =styled.video`
+    max-height: 45rem;
+    width: 100%;
+    object-fit: cover;
+
+`
 
 
 const Video = () => {
@@ -191,7 +197,7 @@ const Video = () => {
                     <Subscripe onClick={handelSubscribe}>{currentUser.subscribedUsers?.includes(channel._id) ? "SUBSCRIBED": "SUBSCRIBE"}</Subscripe>
                 </Chanel>
                 <Hr />
-                <Comments />
+                <Comments videoId={currentVideo._id}/>
             </Content>
             {/* <Recommendation>
                 <Card type="sm"/>
