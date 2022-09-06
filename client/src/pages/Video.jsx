@@ -154,7 +154,7 @@ const Video = () => {
         <Container>
             <Content>
                 <VideoWrapper>
-                    <VideoFram src={currentVideo.VideoUrl}/>
+                    <VideoFram src={currentVideo.VideoUrl} controls/>
                 </VideoWrapper>
                 <Title>{currentVideo?.title}</Title>
                 <Details>
