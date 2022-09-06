@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined';
-
+import Upload from './Upload'
 
 
 
@@ -72,7 +72,9 @@ const Avatar = styled.img`
 
 const Navbar = () => {
     const {currentUser} =useSelector(state=> state.user)
+    const [open,setOpen]=useState(false)
     return (
+        <>
         <Container>
             <Wrapper>
                 <Search>
@@ -81,7 +83,7 @@ const Navbar = () => {
                 </Search>
                 {currentUser ? (
                     <User>
-                        <VideoCallOutlinedIcon />
+                        <VideoCallOutlinedIcon onClick={()=>setOpen(true)}/>
                         <Avatar src={currentUser.img}/>
                         {currentUser.name}
                     </User> 
@@ -93,6 +95,8 @@ const Navbar = () => {
                 </Link>}
             </Wrapper>
         </Container>
+        {open && <Upload setOpen={setOpen}/>}
+        </>
     )
 }
 
