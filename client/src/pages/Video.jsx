@@ -9,7 +9,8 @@ import Card from '../components/Card'
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
-import { fetchSuccess ,like,dislike} from '../redux/videoSlice'
+import { fetchSuccess, like, dislike } from '../redux/videoSlice'
+import { subscription } from '../redux/userSlice'
 import { format } from 'timeago.js';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
@@ -118,7 +119,7 @@ const Video = () => {
     useEffect(() => {
         const fetchData = async () => {
             const videoRes = await axios.get(`/videos/find/${path}`);
-            console.log("videoRes",videoRes.data);
+            console.log("videoRes", videoRes.data);
             const channelRes = await axios.get(`/users/find/${videoRes.data.userId}`);
             setChannel(channelRes.data);
             dispatch(fetchSuccess(videoRes.data))
@@ -126,21 +127,28 @@ const Video = () => {
         fetchData();
     }, [path, dispatch]);
 
-    const handleLike =async ()=>{
+    const handleLike = async () => {
         await axios.put(`/users/like/${currentVideo._id}`);
         dispatch(like(currentUser._id));
     }
-    
-    const handleDisike =async ()=>{
+
+    const handleDisike = async () => {
         await axios.put(`/users/dislike/${currentVideo._id}`);
         dispatch(dislike(currentUser._id));
+    }
+
+    const handelSubscribe=async ()=>{
+        currentUser.subscribedUsers.includes(channel._id) ?
+        await axios.put(`/users/unsub/${channel._id}`):
+        await axios.put(`/users/sub/${channel._id}`)
+        dispatch(subscription(channel._id))
     }
 
     return (
         <Container>
             <Content>
                 <VideoWrapper>
-                    <iframe width="100%" height="720" src="https://www.youtube.com/embed/vkc99WHcDTk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <VideoFram src={currentVideo.VideoUrl}/>
                 </VideoWrapper>
                 <Title>{currentVideo?.title}</Title>
                 <Details>
@@ -180,7 +188,7 @@ const Video = () => {
                             <Description>{currentVideo?.description}</Description>
                         </ChanelDetails>
                     </ChanelInfo>
-                    <Subscripe>Subscripe</Subscripe>
+                    <Subscripe onClick={handelSubscribe}>{currentUser.subscribedUsers?.includes(channel._id) ? "SUBSCRIBED": "SUBSCRIBE"}</Subscripe>
                 </Chanel>
                 <Hr />
                 <Comments />
