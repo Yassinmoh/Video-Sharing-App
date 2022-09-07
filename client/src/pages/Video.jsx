@@ -14,7 +14,7 @@ import { subscription } from '../redux/userSlice'
 import { format } from 'timeago.js';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-
+import Recommandation from '../components/Recommandation'
 
 
 const Container = styled.div`
@@ -24,9 +24,7 @@ const Container = styled.div`
 const Content = styled.div`
 flex: 5;
 `
-const Recommendation = styled.div`
-flex: 2;
-`
+
 const VideoWrapper = styled.div`
 
 `
@@ -154,7 +152,7 @@ const Video = () => {
         <Container>
             <Content>
                 <VideoWrapper>
-                    <VideoFram src={currentVideo.VideoUrl} controls/>
+                    <VideoFram src={currentVideo?.VideoUrl} controls/>
                 </VideoWrapper>
                 <Title>{currentVideo?.title}</Title>
                 <Details>
@@ -197,21 +195,9 @@ const Video = () => {
                     <Subscripe onClick={handelSubscribe}>{currentUser.subscribedUsers?.includes(channel._id) ? "SUBSCRIBED": "SUBSCRIBE"}</Subscripe>
                 </Chanel>
                 <Hr />
-                <Comments videoId={currentVideo._id}/>
+                <Comments videoId={currentVideo?._id}/>
             </Content>
-            {/* <Recommendation>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-                <Card type="sm"/>
-            </Recommendation> */}
+                <Recommandation tags={currentVideo?.tags}/>
         </Container>
     )
 }
