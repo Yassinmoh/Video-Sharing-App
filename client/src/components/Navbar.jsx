@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined';
 import Upload from './Upload'
@@ -40,6 +40,8 @@ const Input = styled.input`
     border:0;
     outline: none;
     background-color: transparent;
+    color:${({ theme }) => theme.text};
+
 `
 const Button = styled.button`
     padding: 5px 15px;
@@ -71,15 +73,17 @@ const Avatar = styled.img`
 
 
 const Navbar = () => {
+    const navegate=useNavigate()
     const {currentUser} =useSelector(state=> state.user)
     const [open,setOpen]=useState(false)
+    const [q,setQ]=useState('')
     return (
         <>
         <Container>
             <Wrapper>
                 <Search>
-                    <Input placeholder='Search' />
-                    <SearchIcon />
+                    <Input placeholder='Search' onChange={(e)=>setQ(e.target.value)}/>
+                    <SearchIcon onClick={()=>navegate(`/search?q=${q}`)} />
                 </Search>
                 {currentUser ? (
                     <User>
