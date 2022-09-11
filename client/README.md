@@ -1,3 +1,3 @@
 ## iMAGES
 
-![!CHEESE](mainhoome.png)
+![!CHEESE](../client/public/mainhoome.png)
